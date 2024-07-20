@@ -1,1 +1,1 @@
-**Task:** Setting and connecting to server using Secure Shell
+This is my readme file for project one
