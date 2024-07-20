@@ -1,35 +1,24 @@
-Include /etc/ssh/ssh_config.d/*.conf
+#!/usr/bin/env bash
 
-Host *
-#   ForwardAgent no
-#   ForwardX11 no
-#   ForwardX11Trusted yes
-PasswordAuthentication no
-#   HostbasedAuthentication no
-#   GSSAPIAuthentication no
-#   GSSAPIDelegateCredentials no
-#   GSSAPIKeyExchange no
-#   GSSAPITrustDNS no
-#   BatchMode no
-#   CheckHostIP yes
-#   AddressFamily any
-#   ConnectTimeout 0
-#   StrictHostKeyChecking ask
-IdentityFile ~/.ssh/school
-#   IdentityFile ~/.ssh/id_dsa
-#   IdentityFile ~/.ssh/id_ecdsa
-#   IdentityFile ~/.ssh/id_ed25519
-#   Port 22
-#   Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc
-#   MACs hmac-md5,hmac-sha1,umac-64@openssh.com
-#   EscapeChar ~
-#   Tunnel no
-#   TunnelDevice any:any
-#   PermitLocalCommand no
-#   VisualHostKey no
-#   ProxyCommand ssh -q -W %h:%p gateway.example.com
-#   RekeyLimit 1G 1h
-#   UserKnownHostsFile ~/.ssh/known_hosts.d/%k
-    SendEnv LANG LC_*
-    HashKnownHosts yes
-    GSSAPIAuthentication yes
+# Define variables
+CONFIG_FILE="$HOME/.ssh/config"
+KEY_FILE="$HOME/.ssh/school"
+SERVER_ALIAS="6225-web-01"
+SERVER_ADDRESS="172.17.255.255"
+
+# Create the .ssh directory if it doesn't exist
+mkdir -p $HOME/.ssh
+
+# Create or overwrite the SSH config file
+cat <<EOL > $CONFIG_FILE
+Host $SERVER_ALIAS
+    HostName $SERVER_ADDRESS
+    User ubuntu
+    IdentityFile $KEY_FILE
+    PasswordAuthentication no
+EOL
+
+# Set the correct permissions for the SSH config file
+chmod 600 $CONFIG_FILE
+
+echo "SSH client configuration has been updated."
