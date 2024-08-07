@@ -1,7 +1,6 @@
-# Fix stack
-
-exec { 'ULIMIT':
-  onlyif  => 'test -e /etc/default/nginx',
-  command => 'sed -i "5s/[0-9]\+/$( ulimit -n )/" /etc/default/nginx; service nginx restart',
+# Fix apache and automate it using Puppet
+exec { 'fixing typo...':
+  onlyif  => 'test -e /var/www/html/wp-settings.php',
+  command => "sed -i 's/phpp/php/' /var/www/html/wp-settings.php",
   path    => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
 }
